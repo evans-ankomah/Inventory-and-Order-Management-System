@@ -13,7 +13,7 @@ A complete, normalized (3NF) relational database system for e-commerce inventory
 
 ## Project Structure
 
-```
+
 sql/
 ├── erd_diagram.png          # Visual database schema
 ├── schema_ddl.sql           # Database creation script (DDL)
