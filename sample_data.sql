@@ -1,4 +1,3 @@
-
 USE inventory_management;
 
 

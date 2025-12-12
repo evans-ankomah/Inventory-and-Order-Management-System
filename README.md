@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SQL Inventory and Order Management System
 
 ## Project Overview
@@ -201,3 +202,6 @@ This project demonstrates mastery of:
 ---
 
 
+=======
+# Inventory-and-Order-Management-System
+>>>>>>> 703807cced3c53ceb649c5385204c7efa641a90f
