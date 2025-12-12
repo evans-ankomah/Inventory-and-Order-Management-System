@@ -23,9 +23,7 @@ INSERT INTO Customers (full_name, email, phone, shipping_address) VALUES
 ('Mark King', 'mark.king@email.com', '555-0119', '135 Dogwood Drive, Seattle, WA 98101'),
 ('Sandra Wright', 'sandra.wright@email.com', '555-0120', '864 Fir Street, Denver, CO 80201');
 
--- ============================================================================
--- PRODUCTS: 25 products across 5 categories
--- ============================================================================
+
 INSERT INTO Products (product_name, category, price, description) VALUES
 -- Electronics (5 products)
 ('Wireless Bluetooth Headphones', 'Electronics', 79.99, 'Premium noise-canceling over-ear headphones'),
@@ -62,9 +60,7 @@ INSERT INTO Products (product_name, category, price, description) VALUES
 ('Soccer Ball Official Size', 'Sports', 19.99, 'FIFA approved soccer ball'),
 ('Camping Tent 4-Person', 'Sports', 149.99, 'Waterproof camping tent');
 
--- ============================================================================
--- INVENTORY: Stock levels for all products
--- ============================================================================
+
 INSERT INTO Inventory (product_id, quantity_on_hand) VALUES
 (1, 45), (2, 28), (3, 67), (4, 89), (5, 34),
 (6, 120), (7, 56), (8, 78), (9, 42), (10, 95),
@@ -72,9 +68,7 @@ INSERT INTO Inventory (product_id, quantity_on_hand) VALUES
 (16, 38), (17, 125), (18, 92), (19, 76), (20, 54),
 (21, 105), (22, 31), (23, 68), (24, 143), (25, 27);
 
--- ============================================================================
--- ORDERS: 30 orders with various statuses
--- ============================================================================
+
 INSERT INTO Orders (customer_id, order_date, total_amount, order_status) VALUES
 (1, '2024-01-15', 109.98, 'Delivered'),
 (2, '2024-01-18', 299.99, 'Delivered'),
@@ -107,9 +101,6 @@ INSERT INTO Orders (customer_id, order_date, total_amount, order_status) VALUES
 (16, '2024-10-22', 139.98, 'Pending'),
 (18, '2024-10-30', 324.97, 'Pending');
 
--- ============================================================================
--- ORDER_ITEMS: Line items for each order (50+ items)
--- ============================================================================
 INSERT INTO Order_Items (order_id, product_id, quantity, price_at_purchase) VALUES
 -- Order 1 (Customer 1)
 (1, 1, 1, 79.99),
@@ -208,16 +199,4 @@ INSERT INTO Order_Items (order_id, product_id, quantity, price_at_purchase) VALU
 (30, 17, 1, 39.99),
 (30, 20, 1, 64.99);
 
--- ============================================================================
--- DATA SUMMARY
--- ============================================================================
--- Total Customers: 20
--- Total Products: 25 (5 per category)
--- Total Inventory Records: 25
--- Total Orders: 30
--- Total Order Items: 67
--- Order Status Distribution:
---   - Delivered: 20 orders
---   - Shipped: 5 orders
---   - Pending: 5 orders
--- ============================================================================
+

@@ -6,10 +6,6 @@ A complete, normalized (3NF) relational database system for an e-commerce invent
 
 **Status:** In Progress
 
----
-
-
----
 
 ## Project Structure
 
