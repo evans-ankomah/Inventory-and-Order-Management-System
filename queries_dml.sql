@@ -1,24 +1,19 @@
 
 USE inventory_management;
 
--- ============================================================================
 -- SECTION 1: BUSINESS KPI QUERIES
--- ============================================================================
-
--- ----------------------------------------------------------------------------
 -- KPI 1: Total Revenue (Shipped and Delivered Orders Only)
 -- Description: Calculate total revenue from completed orders
--- ----------------------------------------------------------------------------
+
 SELECT 
     SUM(total_amount) AS total_revenue,
     COUNT(*) AS completed_orders
 FROM Orders
 WHERE order_status IN ('Shipped', 'Delivered');
 
--- ----------------------------------------------------------------------------
 -- KPI 2: Top 10 Customers by Total Spending
 -- Description: Identify highest-value customers
--- ----------------------------------------------------------------------------
+
 SELECT 
     c.customer_id,
     c.full_name,
@@ -32,11 +27,9 @@ GROUP BY c.customer_id, c.full_name, c.email
 ORDER BY total_spent DESC
 LIMIT 10;
 
--- ----------------------------------------------------------------------------
+
 -- KPI 3: Top 5 Best-Selling Products by Quantity Sold
--- Description: Most popular products by units sold
--- ----------------------------------------------------------------------------
-SELECT 
+-- Description: Most popular products by units soldSELECT 
     p.product_id,
     p.product_name,
     p.category,
@@ -50,10 +43,10 @@ GROUP BY p.product_id, p.product_name, p.category, p.price
 ORDER BY total_quantity_sold DESC
 LIMIT 5;
 
--- ----------------------------------------------------------------------------
+
 -- KPI 4: Monthly Sales Trend
 -- Description: Revenue breakdown by month to identify trends
--- ----------------------------------------------------------------------------
+
 SELECT 
     DATE_FORMAT(order_date, '%Y-%m') AS month,
     YEAR(order_date) AS year,
@@ -66,14 +59,14 @@ FROM Orders
 GROUP BY DATE_FORMAT(order_date, '%Y-%m'), YEAR(order_date), MONTHNAME(order_date)
 ORDER BY month;
 
--- ============================================================================
--- SECTION 2: ANALYTICAL QUERIES WITH WINDOW FUNCTIONS
--- ============================================================================
 
--- ----------------------------------------------------------------------------
+-- SECTION 2: ANALYTICAL QUERIES WITH WINDOW FUNCTIONS
+
+
+
 -- ANALYTICAL QUERY 1: Sales Rank by Category
 -- Description: Rank products within each category by total sales revenue
--- ----------------------------------------------------------------------------
+
 SELECT 
     category,
     product_id,
@@ -100,11 +93,9 @@ FROM (
 ) ranked_products
 ORDER BY category, category_rank;
 
--- ----------------------------------------------------------------------------
+
 -- ANALYTICAL QUERY 2: Customer Order Frequency
--- Description: Show current order date alongside previous order date
---              to analyze customer return patterns
--- ----------------------------------------------------------------------------
+
 SELECT 
     c.customer_id,
     c.full_name,
@@ -124,14 +115,14 @@ FROM Customers c
 INNER JOIN Orders o ON c.customer_id = o.customer_id
 ORDER BY c.customer_id, o.order_date;
 
--- ============================================================================
--- SECTION 3: PERFORMANCE OPTIMIZATION - VIEWS
--- ============================================================================
 
--- ----------------------------------------------------------------------------
+-- SECTION 3: PERFORMANCE OPTIMIZATION - VIEWS
+
+
+
 -- VIEW: CustomerSalesSummary
 -- Description: Pre-calculated customer spending metrics for fast analytics
--- ----------------------------------------------------------------------------
+
 CREATE OR REPLACE VIEW CustomerSalesSummary AS
 SELECT 
     c.customer_id,
@@ -160,19 +151,19 @@ GROUP BY c.customer_id, c.full_name, c.email, c.phone, c.shipping_address;
 -- Example query using the view:
 -- SELECT * FROM CustomerSalesSummary WHERE customer_status = 'Loyal' ORDER BY total_amount_spent DESC;
 
--- ============================================================================
--- SECTION 4: PERFORMANCE OPTIMIZATION - STORED PROCEDURES
--- ============================================================================
 
--- ----------------------------------------------------------------------------
+-- SECTION 4: PERFORMANCE OPTIMIZATION - STORED PROCEDURES
+
+
 -- STORED PROCEDURE: ProcessNewOrder
--- Description: Process a new order with inventory management and transactions
+-- Description:It is used to process a new order with inventory management and transactions
 -- Parameters:
 --   - p_customer_id: The customer placing the order
 --   - p_product_id: The product being ordered
 --   - p_quantity: Quantity to order
 -- Returns: Success message or error
--- ----------------------------------------------------------------------------
+
+
 DELIMITER //
 
 CREATE PROCEDURE ProcessNewOrder(
@@ -281,9 +272,9 @@ END //
 
 DELIMITER ;
 
--- ============================================================================
+
 -- EXAMPLE USAGE OF STORED PROCEDURE
--- ============================================================================
+
 
 -- Example 1: Successful order (sufficient inventory)
 -- CALL ProcessNewOrder(1, 5, 2);
@@ -294,13 +285,12 @@ DELIMITER ;
 -- Example 3: Failed order (invalid customer)
 -- CALL ProcessNewOrder(9999, 5, 1);
 
--- ============================================================================
 -- ADDITIONAL USEFUL QUERIES
--- ============================================================================
 
--- ----------------------------------------------------------------------------
+
+
 -- Low Stock Alert: Products with inventory below threshold
--- ----------------------------------------------------------------------------
+
 SELECT 
     p.product_id,
     p.product_name,
@@ -317,9 +307,8 @@ INNER JOIN Inventory i ON p.product_id = i.product_id
 WHERE i.quantity_on_hand < 50
 ORDER BY i.quantity_on_hand ASC;
 
--- ----------------------------------------------------------------------------
 -- Category Performance Summary
--- ----------------------------------------------------------------------------
+
 SELECT 
     p.category,
     COUNT(DISTINCT p.product_id) AS total_products,
@@ -332,9 +321,9 @@ INNER JOIN Order_Items oi ON p.product_id = oi.product_id
 GROUP BY p.category
 ORDER BY total_revenue DESC;
 
--- ----------------------------------------------------------------------------
+
 -- Customer Lifetime Value (CLV) Analysis
--- ----------------------------------------------------------------------------
+
 SELECT 
     customer_id,
     full_name,
@@ -352,6 +341,3 @@ SELECT
 FROM CustomerSalesSummary
 ORDER BY total_amount_spent DESC;
 
--- ============================================================================
--- END OF QUERIES SCRIPT
--- ============================================================================
