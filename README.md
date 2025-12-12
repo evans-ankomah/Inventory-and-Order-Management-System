@@ -1,9 +1,8 @@
-<<<<<<< HEAD
 # SQL Inventory and Order Management System
 
 ## Project Overview
 
-A complete, normalized (3NF) relational database system for e-commerce inventory and order management. This capstone project demonstrates advanced SQL skills including database design, DDL, complex queries with window functions, views, and stored procedures.
+A complete, normalized (3NF) relational database system for an e-commerce inventory and order management. This capstone project demonstrates advanced SQL skills including database design, DDL, complex queries with window functions, views, and stored procedures.
 
 **Status:** In Progress
 
@@ -16,7 +15,7 @@ A complete, normalized (3NF) relational database system for e-commerce inventory
 
 
 sql/
-├── erd_diagram.png          # Visual database schema
+├── erd_diagram.jpeg          # Visual database schema
 ├── schema_ddl.sql           # Database creation script (DDL)
 ├── sample_data.sql          # Sample test data
 ├── queries_dml.sql          # KPIs, analytics, views, procedures (DML)
@@ -37,7 +36,7 @@ sql/
 
 ### Entity-Relationship Diagram
 
-![Database ERD](erd_diagram.png)
+![Database ERD](erd_diagram.jpeg)
 
 ### Key Relationships
 
@@ -194,7 +193,7 @@ This project demonstrates mastery of:
 #
 ## 🔗 Related Files
 
-- **ERD Diagram:** [erd_diagram.png](erd_diagram.png)
+- **ERD Diagram:** [erd_diagram.jpeg](erd_diagram.jpeg)
 - **DDL Script:** [schema_ddl.sql](schema_ddl.sql)
 - **Sample Data:** [sample_data.sql](sample_data.sql)
 - **DML Queries:** [queries_dml.sql](queries_dml.sql)
@@ -202,6 +201,3 @@ This project demonstrates mastery of:
 ---
 
 
-=======
-# Inventory-and-Order-Management-System
->>>>>>> 703807cced3c53ceb649c5385204c7efa641a90f
