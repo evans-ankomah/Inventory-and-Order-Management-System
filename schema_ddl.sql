@@ -13,7 +13,7 @@ CREATE TABLE Customers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX idx_email (email),
     INDEX idx_name (full_name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ;
 
 CREATE TABLE Products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,7 +25,7 @@ CREATE TABLE Products (
     CONSTRAINT chk_price CHECK (price >= 0),
     INDEX idx_category (category),
     INDEX idx_product_name (product_name)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ;
 
 CREATE TABLE Inventory (
     inventory_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -38,7 +38,7 @@ CREATE TABLE Inventory (
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     INDEX idx_product (product_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ;
 
 CREATE TABLE Orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,7 +56,7 @@ CREATE TABLE Orders (
     INDEX idx_customer (customer_id),
     INDEX idx_order_date (order_date),
     INDEX idx_status (order_status)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ;
 
 
 CREATE TABLE Order_Items (
@@ -78,5 +78,5 @@ CREATE TABLE Order_Items (
     INDEX idx_order (order_id),
     INDEX idx_product (product_id),
     INDEX idx_order_product (order_id, product_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ;
 
