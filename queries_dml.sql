@@ -50,6 +50,7 @@ GROUP BY p.product_id, p.product_name, p.category, p.price
 ORDER BY total_quantity_sold DESC
 LIMIT 5;
 
+
 -- =====================================================
 -- KPI 4: Monthly Sales Trend
 -- Description: Revenue breakdown by month to identify trends
@@ -165,11 +166,8 @@ GROUP BY c.customer_id, c.full_name, c.email, c.phone, c.shipping_address;
 
 DELIMITER //
 
-CREATE PROCEDURE ProcessNewOrder(
-    IN p_customer_id INT,
-    IN p_product_id INT,
-    IN p_quantity INT
-)
+CREATE PROCEDURE ProcessNewOrder(IN p_customer_id INT, IN p_product_id INT, IN p_quantity INT)
+
 BEGIN
     DECLARE v_current_stock INT;
     DECLARE v_product_price DECIMAL(10,2);
@@ -184,15 +182,17 @@ BEGIN
         SELECT 'Error: Transaction failed. Order could not be processed.' AS error_message;
     END;
     
-    -- Start transaction
-    START TRANSACTION;
+    -- Main procedure block with label (for LEAVE statements)
+    proc_block: BEGIN
+        -- Start transaction
+        START TRANSACTION;
     
     -- Step 1: Validate customer exists
     IF NOT EXISTS (SELECT 1 FROM Customers WHERE customer_id = p_customer_id) THEN
         SET v_error_msg = CONCAT('Error: Customer ID ', p_customer_id, ' does not exist.');
         ROLLBACK;
         SELECT v_error_msg AS error_message;
-        LEAVE ProcessNewOrder;
+        LEAVE proc_block;
     END IF;
     
     -- Step 2: Validate product exists
@@ -200,14 +200,14 @@ BEGIN
         SET v_error_msg = CONCAT('Error: Product ID ', p_product_id, ' does not exist.');
         ROLLBACK;
         SELECT v_error_msg AS error_message;
-        LEAVE ProcessNewOrder;
+        LEAVE proc_block;
     END IF;
     
     -- Step 3: Validate quantity is positive
     IF p_quantity <= 0 THEN
         ROLLBACK;
         SELECT 'Error: Quantity must be greater than 0.' AS error_message;
-        LEAVE ProcessNewOrder;
+        LEAVE proc_block;
     END IF;
     
     -- Step 4: Get current inventory level and product price
@@ -227,7 +227,7 @@ BEGIN
         );
         ROLLBACK;
         SELECT v_error_msg AS error_message;
-        LEAVE ProcessNewOrder;
+        LEAVE proc_block;
     END IF;
     
     -- Step 6: Calculate total amount
@@ -263,6 +263,8 @@ BEGIN
         v_total_amount AS total_amount,
         (v_current_stock - p_quantity) AS remaining_stock,
         'Order processed successfully!' AS message;
+    
+    END proc_block;  -- Close labeled block
         
 END //
 
@@ -273,13 +275,13 @@ DELIMITER ;
 -- =====================================================
 
 -- Example 1: Successful order (sufficient inventory)
--- CALL ProcessNewOrder(1, 5, 2);
+-- CALL ProcessNewOrder(2, 6, 2);
 
 -- Example 2: Failed order (insufficient inventory)
--- CALL ProcessNewOrder(1, 5, 1000);
+-- CALL ProcessNewOrder(1, 5, 2);
 
 -- Example 3: Failed order (invalid customer)
--- CALL ProcessNewOrder(9999, 5, 1);
+-- CALL ProcessNewOrder(1, 2, 1);
 
 -- =====================================================
 -- SECTION 5: ADDITIONAL USEFUL QUERIES
