@@ -382,8 +382,8 @@ ORDER BY i.quantity_on_hand ASC;
 
 DELIMITER //
 
--- Enhanced ProcessNewOrder Stored Procedure
--- Now includes audit logging for full traceability
+-- ProcessNewOrder Stored Procedure
+
 CREATE PROCEDURE ProcessNewOrder(
     IN p_customer_id INT, 
     IN p_product_id INT, 
